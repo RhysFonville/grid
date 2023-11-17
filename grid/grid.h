@@ -8,8 +8,6 @@
 #include <stdexcept>
 #include <vector>
 
-#define GRID_TEMPLATE template <typename T>
-
 template <typename T>
 class Grid {
 public:
@@ -47,7 +45,6 @@ public:
 		"because of [container.requirements].");
 
 	~Grid() noexcept {
-		// Delete the array created
 		for (int i = 0; i < _size_x; i++)
 			delete[] grid[i];
 		delete[] grid;
@@ -120,9 +117,15 @@ public:
 		return _size_y;
 	}
 
+	void clear() noexcept {
+		for (int i = 0; i < _size_x; i++) {
+			for (int j = 0; j < _size_y; j++) {
+				grid[i][j] = T();
+			}
+		}
+	}
+
 private:
 	ArrGrid grid = nullptr;
 	size_t _size_x = 0, _size_y = 0;
 };
-
-#undef GRID_TEMPLATE
